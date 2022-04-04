@@ -14,6 +14,7 @@ public class Customer
     public string Account { get; set; }
     public string Password { get; set; }
     public string? NumberPhone { get; set; }
+    public bool IsAdmin { get; set; }
     public bool IsDeleted { get; set; }
    
     public ICollection<CartsDetailCustomer> CartsDetailCustomers { get; set; }

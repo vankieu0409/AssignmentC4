@@ -30,8 +30,6 @@
     <Folder Include="Repositories\Interface\" />
     <Folder Include="Service\Implement\" />
     <Folder Include="Service\Interface\" />
-    <Folder Include="ViewModels\DTOs\" />
-    <Folder Include="ViewModels\Show\" />
   </ItemGroup>
 
 </Project>

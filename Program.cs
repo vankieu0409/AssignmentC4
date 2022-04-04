@@ -19,6 +19,7 @@ builder.Services.AddScoped(typeof(GenericInterface<>),typeof(GenericRepository<>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration));
 builder.Services.AddScoped<IProductService, ProductsService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,7 +1,5 @@
 ﻿using AssignmentC4.Service.Interface;
-using AssignmentC4.ViewModels.DTOs;
 using AssignmentC4.ViewModels.Show;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,13 +36,29 @@ namespace AssignmentC4.Controllers
             }
         }
 
-        [HttpPut("")]
-        public IActionResult UpdtaeActionResult(Guid Id, string name)
+        [HttpPut("Update/{id}")]
+        public IActionResult UpdtaeActionResult(ProductViewModel productupdate)
         {
             try
             {
-               // var productNewName =_productService.GetCollection().FirstOrDefault(c=>c.)
-                return Ok();
+                _productService.UpdateProduct(productupdate);
+               
+                return Ok("Sửa Thành Công!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        [HttpPut("Delete/{id}")]
+        public IActionResult DeleteActionResult(ProductViewModel productupdate)
+        {
+            try
+            {
+                _productService.DeleteProduct(productupdate);
+
+                return Ok("Xóa Thành Công!");
             }
             catch (Exception e)
             {

@@ -1,7 +1,7 @@
 ﻿using AssignmentC4.Entities;
 using AssignmentC4.Repositories.Interface;
 using AssignmentC4.Service.Interface;
-using AssignmentC4.ViewModels.DTOs;
+
 using AssignmentC4.ViewModels.Show;
 
 using AutoMapper;
@@ -21,7 +21,7 @@ public class ProductsService : IProductService
 
     public IEnumerable<ProductViewModel> GetCollection()
     {
-        var listProductTemp = _product.GetAll().Where(c => c.IsDeleted==true).ToList();
+        var listProductTemp = _product.GetAll().Where(c => c.IsDeleted == true).ToList();
         var listProduct = new List<ProductViewModel>();
         listProduct = _mapper.Map<List<ProductViewModel>>(listProductTemp);
         return listProduct;
@@ -34,9 +34,17 @@ public class ProductsService : IProductService
         await _product.AddAsync(productTemp);
     }
 
-    public async Task UpdateProduct(ProductInput productUpdate)
+    public async Task UpdateProduct(ProductViewModel productUpdate)
     {
-        var productTemp = _mapper.Map<Products>(productUpdate);
+        var productTemp = _product.GetAll().FirstOrDefault(c => c.ICProduct == productUpdate.ICProduct);
+        productTemp = _mapper.Map<Products>(productUpdate);
+        await _product.Update(productTemp);
+    }
+    public async Task DeleteProduct(ProductViewModel productUpdate)
+    {
+        var productTemp = _product.GetAll().FirstOrDefault(c => c.ICProduct == productUpdate.ICProduct);
+        productTemp = _mapper.Map<Products>(productUpdate);
+        productTemp.IsDeleted = false;
         await _product.Update(productTemp);
     }
 }
