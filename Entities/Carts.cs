@@ -10,8 +10,10 @@ public class Carts
     public Guid IdCart { get; set; }
     public Guid ICCart { get; set; }
     public string NameCarts { get; set; }
+
+    public int StatusCart { get; set; }
     public bool IsDeleted { get; set; }
   
-    public ICollection<CartsDetailCustomer> CartsDetailCustomers{ get; set; }
+    public virtual ICollection<CartsDetailCustomer> CartsDetailCustomers{ get; set; }
     public virtual ICollection<ProductCarts> ProductsCarts{ get; set; }
 }

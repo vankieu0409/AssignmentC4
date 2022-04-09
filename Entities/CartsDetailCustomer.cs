@@ -6,6 +6,6 @@ public class CartsDetailCustomer
     public Guid  IdCustomer { get; set; }
    // public bool PaymentStatus { get; set; }
     public bool IsDeleted { get; set; }
-    public Carts  Cartses { get; set; }
-    public Customer  Customeres { get; set; }
+    public virtual Carts Cartses { get; set; }
+    public virtual Customer Customeres { get; set; }
 }

@@ -19,6 +19,8 @@ public class ApplicationDbContext:Microsoft.EntityFrameworkCore.DbContext
     public DbSet<CategoryProduct> CategoryProductes { get; set; }
     public DbSet<ProductCarts> ProductCartses { get; set; }
     public DbSet<Products> Products{ get; set; }
+    public DbSet<Order> Orders{ get; set; }
+    public DbSet<OrderDetails> OrderDetails{ get; set; }
    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +32,8 @@ public class ApplicationDbContext:Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.ApplyConfiguration(new CategoriesProductConfiguration());
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new CartsDetailCustomerConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderDetailsConfiguration());
 
 
     }

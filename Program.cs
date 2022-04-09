@@ -1,4 +1,4 @@
-using AssignmentC4.DbContext;
+﻿using AssignmentC4.DbContext;
 using AssignmentC4.Maping;
 using AssignmentC4.Repositories.Implement;
 using AssignmentC4.Repositories.Interface;
@@ -6,6 +6,7 @@ using AssignmentC4.Service.Implement;
 using AssignmentC4.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins"; //Bật yêu cầu đa nguồn (CORS) trong ASP.NET Core
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +27,16 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins, builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        ////Bật yêu cầu đa nguồn (CORS) trong ASP.NET Core
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

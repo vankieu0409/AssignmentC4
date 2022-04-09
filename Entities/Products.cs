@@ -14,6 +14,7 @@ public class Products
     public Int64 ImportPrice { get; set; }
     public byte Image { get; set; }
     public bool IsDeleted { get; set; }
-    public  ICollection<ProductCarts> ProductCarts { get; set; }
-    public  ICollection<CategoryProduct> CategoryProducts { get; set; }
+    public virtual ICollection<ProductCarts> ProductCarts { get; set; }
+    public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
+    public virtual ICollection<OrderDetails> OrderDetails { get; set; }
 }

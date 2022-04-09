@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentC4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220403104334_ass-Version-1.0")]
-    partial class assVersion10
+    [Migration("20220409070723_kieu")]
+    partial class kieu
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,9 @@ namespace AssignmentC4.Migrations
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
+
+                    b.Property<int>("StatusCart")
+                        .HasColumnType("int");
 
                     b.HasKey("IdCart");
 
@@ -121,11 +124,14 @@ namespace AssignmentC4.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("Customer in 3/4/2022 5:43:34 PM");
+                        .HasDefaultValue("Customer in 9/4/2022 2:07:23 PM");
 
                     b.Property<Guid>("ICCustomer")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -144,6 +150,89 @@ namespace AssignmentC4.Migrations
                     b.HasKey("IdCustomer");
 
                     b.ToTable("CUSTOMER", (string)null);
+                });
+
+            modelBuilder.Entity("AssignmentC4.Entities.Order", b =>
+                {
+                    b.Property<Guid>("id_Order")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDetete")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("amount_Pay")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("discount")
+                        .HasColumnType("money");
+
+                    b.Property<Guid>("id_COrder")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("id_Customer")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("order_Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("order_status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("paying_Customer")
+                        .HasColumnType("money");
+
+                    b.Property<string>("payments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("refunds")
+                        .HasColumnType("money");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("total_pay")
+                        .HasColumnType("money");
+
+                    b.HasKey("id_Order");
+
+                    b.HasIndex("id_Customer");
+
+                    b.ToTable("ORDER", (string)null);
+                });
+
+            modelBuilder.Entity("AssignmentC4.Entities.OrderDetails", b =>
+                {
+                    b.Property<Guid>("id_Order")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("id_Product")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("money");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("price_Each")
+                        .HasColumnType("money");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("unit_Price")
+                        .HasColumnType("money");
+
+                    b.HasKey("id_Order", "id_Product");
+
+                    b.HasIndex("id_Product");
+
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("AssignmentC4.Entities.ProductCarts", b =>
@@ -247,6 +336,33 @@ namespace AssignmentC4.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("AssignmentC4.Entities.Order", b =>
+                {
+                    b.HasOne("AssignmentC4.Entities.Customer", "Customers")
+                        .WithMany("Orders")
+                        .HasForeignKey("id_Customer")
+                        .IsRequired();
+
+                    b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("AssignmentC4.Entities.OrderDetails", b =>
+                {
+                    b.HasOne("AssignmentC4.Entities.Order", "Orders")
+                        .WithMany("OrDerDetailses")
+                        .HasForeignKey("id_Order")
+                        .IsRequired();
+
+                    b.HasOne("AssignmentC4.Entities.Products", "Products")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("id_Product")
+                        .IsRequired();
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("AssignmentC4.Entities.ProductCarts", b =>
                 {
                     b.HasOne("AssignmentC4.Entities.Carts", "Carts")
@@ -279,11 +395,20 @@ namespace AssignmentC4.Migrations
             modelBuilder.Entity("AssignmentC4.Entities.Customer", b =>
                 {
                     b.Navigation("CartsDetailCustomers");
+
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("AssignmentC4.Entities.Order", b =>
+                {
+                    b.Navigation("OrDerDetailses");
                 });
 
             modelBuilder.Entity("AssignmentC4.Entities.Products", b =>
                 {
                     b.Navigation("CategoryProducts");
+
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("ProductCarts");
                 });

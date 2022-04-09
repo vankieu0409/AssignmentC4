@@ -29,14 +29,19 @@ namespace AssignmentC4.Controllers
                 throw e;
             };
         }
-        [HttpGet("SignIn/{acc}")]
+        [HttpGet("SignIn")]
         public IActionResult SignIn(string acc, string pass)
         {
             var PersonSignIn = _customerService.GetCollection()
-                .Any(c => string.Equals(c.Account, acc) && string.Equals(c.Password, pass));
-            if (PersonSignIn)
+                .FirstOrDefault(c => string.Equals(c.Account, acc) && string.Equals(c.Password, pass));
+            if (PersonSignIn!=null)
             {
-                return Ok(" Dăng nhập thành công!");
+                var obj = new  {
+                    code = 200,
+                    role = PersonSignIn.IsAdmin,
+                    status = "Đăng nhập thành công !"
+                };
+                return Ok( obj);
             }
             else
             {

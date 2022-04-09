@@ -17,6 +17,7 @@ public class Customer
     public bool IsAdmin { get; set; }
     public bool IsDeleted { get; set; }
    
-    public ICollection<CartsDetailCustomer> CartsDetailCustomers { get; set; }
+    public virtual ICollection<CartsDetailCustomer> CartsDetailCustomers { get; set; }
+    public virtual ICollection<Order> Orders { get; set; }
    
 }

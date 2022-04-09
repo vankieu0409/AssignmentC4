@@ -24,12 +24,10 @@
 
   <ItemGroup>
     <Folder Include="DbContext\" />
-    <Folder Include="Entities\" />
     <Folder Include="Mapping\" />
     <Folder Include="Repositories\Implement\" />
     <Folder Include="Repositories\Interface\" />
     <Folder Include="Service\Implement\" />
-    <Folder Include="Service\Interface\" />
   </ItemGroup>
 
 </Project>
