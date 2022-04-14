@@ -9,9 +9,6 @@ public class Order
 {
     public Guid id_Order { get; set; }
     public Guid id_Customer { get; set; }
-
-
-    public Guid id_COrder { get; set; }
     public DateTime order_Time { get; set; }
     [Column(TypeName = "money")]
     public int discount { get; set; }

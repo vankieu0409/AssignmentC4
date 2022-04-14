@@ -8,7 +8,6 @@ public class Customer
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid IdCustomer { get; set; }
-    public Guid ICCustomer { get; set; }
     public string CustomerName { get; set; }
     public bool? Sex { get; set; }
     public string Account { get; set; }

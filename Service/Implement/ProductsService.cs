@@ -1,7 +1,7 @@
 ﻿using AssignmentC4.Entities;
 using AssignmentC4.Repositories.Interface;
 using AssignmentC4.Service.Interface;
-
+using AssignmentC4.ViewModels.ModelCommand;
 using AssignmentC4.ViewModels.Show;
 
 using AutoMapper;
@@ -34,15 +34,15 @@ public class ProductsService : IProductService
         await _product.AddAsync(productTemp);
     }
 
-    public async Task UpdateProduct(ProductViewModel productUpdate)
+    public async Task UpdateProduct(ProductCUDViewModel productUpdate)
     {
-        var productTemp = _product.GetAll().FirstOrDefault(c => c.ICProduct == productUpdate.ICProduct);
+        var productTemp = _product.GetAll().FirstOrDefault(c => c.IdProduct == productUpdate.IdProduct);
         productTemp = _mapper.Map<Products>(productUpdate);
         await _product.Update(productTemp);
     }
-    public async Task DeleteProduct(ProductViewModel productUpdate)
+    public async Task DeleteProduct(ProductCUDViewModel productUpdate)
     {
-        var productTemp = _product.GetAll().FirstOrDefault(c => c.ICProduct == productUpdate.ICProduct);
+        var productTemp = _product.GetAll().FirstOrDefault(c => c.IdProduct == productUpdate.IdProduct);
         productTemp = _mapper.Map<Products>(productUpdate);
         productTemp.IsDeleted = false;
         await _product.Update(productTemp);

@@ -7,8 +7,7 @@ public class Products
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid IdProduct { get; set; }  
-    public Guid ICProduct { get; set; }  
+    public Guid IdProduct { get; set; }
     public string  NameProduct { get; set; }  
     public Int64 Price { get; set; }  
     public Int64 ImportPrice { get; set; }

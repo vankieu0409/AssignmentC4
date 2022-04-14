@@ -17,7 +17,6 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .OnDelete(deleteBehavior: DeleteBehavior.ClientSetNull);
         builder.Property(p => p.id_Order).ValueGeneratedOnAdd().IsRequired();
         builder.Property(p => p.id_Customer).IsRequired();
-        builder.Property(p => p.id_COrder).ValueGeneratedOnAdd().IsRequired();
-        
+
     }
 }

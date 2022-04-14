@@ -13,7 +13,7 @@ public class CustomersConfiguration:IEntityTypeConfiguration<Customer>
         builder.HasKey(p => p.IdCustomer);
         builder.Property(p => p.Sex).IsRequired().HasDefaultValue(null);
         builder.Property(p => p.IdCustomer).IsRequired().ValueGeneratedOnAdd();
-        builder.Property(p => p.ICCustomer).IsRequired().ValueGeneratedOnAdd();
+
         builder.Property(p => p.CustomerName).HasMaxLength(100).HasDefaultValue($"Customer in {a}");
 
     }

@@ -1,4 +1,5 @@
 ﻿using AssignmentC4.Entities;
+using AssignmentC4.ViewModels.ModelCommand;
 using AssignmentC4.ViewModels.Show;
 
 using AutoMapper;
@@ -11,5 +12,6 @@ public class AutoMapperConfiguration : Profile
     {
         CreateMap<Products, ProductViewModel>().ReverseMap();
         CreateMap<Customer, CustomerViewModel>().ReverseMap();
+        CreateMap<ProductCUDViewModel, CustomerViewModel>().ReverseMap();
     }
 }

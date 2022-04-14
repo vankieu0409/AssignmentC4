@@ -11,7 +11,7 @@ public class GenericRepository<T>:GenericInterface<T> where T:class
     {
         _context = context ??throw new ArgumentNullException(nameof(context));
     }
-    public IQueryable<T> GetAll()
+    public IEnumerable<T> GetAll()
     {
        return _context.Set<T>();
     }

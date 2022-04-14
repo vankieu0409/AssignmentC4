@@ -2,7 +2,7 @@
 
 public interface GenericInterface<T>
 {
-    IQueryable<T> GetAll();
+    IEnumerable<T> GetAll();
     Task AddAsync(T entity);
     Task Update(T entity);
     Task Delete(T entity);

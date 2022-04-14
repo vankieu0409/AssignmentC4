@@ -28,6 +28,7 @@
     <Folder Include="Repositories\Implement\" />
     <Folder Include="Repositories\Interface\" />
     <Folder Include="Service\Implement\" />
+    <Folder Include="ViewModels\ModelCommand\" />
   </ItemGroup>
 
 </Project>

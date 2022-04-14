@@ -11,7 +11,6 @@ public class ProductConfiguration:IEntityTypeConfiguration<Products>
         builder.ToTable("PRODUCT");
         builder.HasKey(c => c.IdProduct);
         builder.Property(p => p.IdProduct).IsRequired().ValueGeneratedOnAdd();
-        builder.Property(p => p.ICProduct).IsRequired().ValueGeneratedOnAdd();
         builder.Property(p => p.NameProduct).HasMaxLength(50).ValueGeneratedOnAdd();
         builder.Property(c => c.Image).IsRequired();
         builder.Property(c => c.Price).IsRequired().HasDefaultValue(0);

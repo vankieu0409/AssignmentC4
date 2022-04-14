@@ -11,7 +11,6 @@ public class CartsConfiguration:IEntityTypeConfiguration<Carts>
         builder.ToTable("CARTS");
         builder.HasKey(p=>p.IdCart);
         builder.Property(p => p.IdCart).IsRequired().ValueGeneratedOnAdd();
-        builder.Property(p => p.ICCart).IsRequired().ValueGeneratedOnAdd();
         builder.Property(p => p.NameCarts).HasMaxLength(25);
         
     }
