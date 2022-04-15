@@ -1,4 +1,5 @@
 ﻿using AssignmentC4.Service.Interface;
+using AssignmentC4.ViewModels.ModelCommand;
 using AssignmentC4.ViewModels.Show;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace AssignmentC4.Controllers
         }
 
         [HttpPut("Update/{id}")]
-        public IActionResult UpdtaeActionResult(ProductViewModel productupdate)
+        public IActionResult UpdtaeActionResult(ProductCUDViewModel productupdate)
         {
             try
             {
@@ -52,7 +53,7 @@ namespace AssignmentC4.Controllers
             }
         }
         [HttpPut("Delete/{id}")]
-        public IActionResult DeleteActionResult(ProductViewModel productupdate)
+        public IActionResult DeleteActionResult(ProductCUDViewModel productupdate)
         {
             try
             {
