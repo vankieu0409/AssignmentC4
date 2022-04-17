@@ -7,13 +7,12 @@ public class Carts
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid IdCart { get; set; }
-
-    public string NameCarts { get; set; }
-
-    public int StatusCart { get; set; }
+    public Guid CustomerID { get; set; }
+    public Guid CartId { get; set; }
+    [Range(0,double.MaxValue)]
+    public float TotalCost { get; set; }
+    public int CartStatus { get; set; }
     public bool IsDeleted { get; set; }
-
-    public virtual ICollection<CartsDetailCustomer> CartsDetailCustomers { get; set; }
+    public virtual Customer Customer { get; set; }
     public virtual ICollection<ProductCarts> ProductsCarts { get; set; }
 }

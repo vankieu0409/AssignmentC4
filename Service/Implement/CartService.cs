@@ -28,7 +28,7 @@ public class CartService:ICartService
     public async Task<List<ProductViewModelsCart>> GetProductsInGioHang(Guid idCart)
     {
         var ProductInCart = _giohang.GetAll().Where(c => c.IdCart == idCart&& c.IsDeleted==true);
-        var listProductInCart= ProductInCart.Join(_product.GetAll(), a => a.IdProduct, b => b.IdProduct, (a, b) => new {b.NameProduct,b.Image,a.Quantity,a.Prime});
+        var listProductInCart= ProductInCart.Join(_product.GetAll(), a => a.IdProduct, b => b.IdProduct, (a, b) => new {b.NameProduct,b.Image,a.Quantity,a.Price});
         var listProductInCartShow = _mapper.Map<List<ProductViewModelsCart>>(listProductInCart);
          return listProductInCartShow;
     }
@@ -41,7 +41,7 @@ public class CartService:ICartService
         productInCart.IsDeleted = true;
         productInCart.IdProduct = pro.idProduct;
         productInCart.Quantity = pro.Quantity;
-        productInCart.Prime = pro.Price;
+        productInCart.Price = pro.Price;
 
         _giohang.AddAsync(productInCart);
 
@@ -54,7 +54,7 @@ public class CartService:ICartService
         productInCart.IsDeleted = true;
         productInCart.IdProduct = pro.idProduct;
         productInCart.Quantity = pro.Quantity;
-        productInCart.Prime = pro.Price;
+        productInCart.Price = pro.Price;
 
         _giohang.Update(productInCart);
 

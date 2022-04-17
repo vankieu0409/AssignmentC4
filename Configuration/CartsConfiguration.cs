@@ -9,9 +9,8 @@ public class CartsConfiguration:IEntityTypeConfiguration<Carts>
     public void Configure(EntityTypeBuilder<Carts> builder)
     {
         builder.ToTable("CARTS");
-        builder.HasKey(p=>p.IdCart);
-        builder.Property(p => p.IdCart).IsRequired().ValueGeneratedOnAdd();
-        builder.Property(p => p.NameCarts).HasMaxLength(25);
-        
+        builder.HasKey(p=>new { p.CartId, p.CustomerID });
+        builder.Property(p => p.CartId).IsRequired().ValueGeneratedOnAdd();
+        builder.Property(x => x.TotalCost).HasDefaultValue(0.00);
     }
 }

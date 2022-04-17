@@ -8,12 +8,20 @@ public class Products
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid IdProduct { get; set; }
+    [Required]
+    [MinLength(5)]
     public string  NameProduct { get; set; }  
-    public Int64 Price { get; set; }  
+    [Required]
+    [Range(0,int.MaxValue)]
+    public Int64 Price { get; set; }
+    [Required]
+    [Range(0, int.MaxValue)]
+    public int Quantity { get; set; }
+    [Required]
+    [Range(0, int.MaxValue)]
     public Int64 ImportPrice { get; set; }
-    public byte Image { get; set; }
+    public string Image { get; set; }
     public bool IsDeleted { get; set; }
     public virtual ICollection<ProductCarts> ProductCarts { get; set; }
-    public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
     public virtual ICollection<OrderDetails> OrderDetails { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AssignmentC4.Entities;
 
@@ -9,13 +10,16 @@ public class OrderDetails
     // số lượng
     public int quantity { get; set; }
     [Column(TypeName = "money")]
+    [Range(0, int.MaxValue)]
     // giá tổng tiền của sản phẩm
     public int unit_Price { get; set; }
     // giá bán 
     [Column(TypeName = "money")]
+    [Range(0, int.MaxValue)]
     public int price_Each { get; set; }
     // giảm giá
     [Column(TypeName = "money")]
+    [Range(0, int.MaxValue)]
     public int Discount { get; set; }
     public bool IsDelete { get; set; }
     public virtual Order Orders { get; set; }

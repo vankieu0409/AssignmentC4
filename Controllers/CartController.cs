@@ -16,10 +16,15 @@ namespace AssignmentC4.Controllers
             _cartService = cartService?? throw  new  ArgumentNullException(nameof(cartService));
         }
 
-        [HttpGet("myCart")]
+        [HttpGet("myCart/{idCart}")]
         public Task<List<ProductViewModelsCart>> GetProductInCart(Guid idCart)
         {
             return _cartService.GetProductsInGioHang(idCart);
         }
+        //[HttpGet("historyCart")]
+        //public Task<List<ProductViewModelsCart>> GetProductInGioHang(Guid idCart)
+        //{
+        //    var history = _cartService.
+        //}
     }
 }
