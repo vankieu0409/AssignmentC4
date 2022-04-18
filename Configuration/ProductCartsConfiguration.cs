@@ -14,5 +14,9 @@ public class ProductCartsConfiguration:IEntityTypeConfiguration<ProductCarts>
         builder.Property(p => p.Quantity).HasDefaultValue(1);
         builder.Property(c => c.Quantity);
         builder.Property(p => p.IsDeleted).HasDefaultValue(true);
+        builder.HasOne<Products>(c => c.Products).WithMany(c => c.ProductCarts).HasForeignKey(c => c.IdProduct)
+            .OnDelete(DeleteBehavior.ClientSetNull);
+        builder.HasOne<Carts>(c => c.Carts).WithMany(c => c.ProductsCarts).HasForeignKey(c => c.IdCart)
+            .OnDelete(DeleteBehavior.ClientSetNull);
     }
 }
