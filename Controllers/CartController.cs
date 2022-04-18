@@ -22,9 +22,10 @@ namespace AssignmentC4.Controllers
             return _cartService.GetProductsInGioHang(idCart);
         }
         [HttpGet("historyCart")]
-        public Task<List<ProductViewModelsCart>> GetProductInGioHang(Guid idCart)
+        public Task<List<ProductViewModelsCart>> getallcart()
         {
-            var history = _cartService.
+            var history = _cartService.GetAllListCart();
+            return history;
         }
     }
 }

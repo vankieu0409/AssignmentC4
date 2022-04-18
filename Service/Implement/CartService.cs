@@ -25,10 +25,33 @@ public class CartService:ICartService
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public Task<List<ProductViewModelsCart>> GetAllListCart()
+    public async Task<List<ProductViewModelsCart>> GetAllListCart()
     {
+        var lstView = new List<ProductViewModelsCart>();
         var lstCart = _cart.GetAll().ToList();
-        return 
+        var lstproductCart = _giohang.GetAll().ToList();
+        lstCart.ForEach(x =>
+        {
+            var lstitem = lstproductCart.Where(c => c.IdCart == x.CartId).ToList();
+            var lstProduct = new List<ProductViewModel>();
+            lstitem.ForEach(x =>
+            {
+                var product = new ProductViewModel();
+                product.IdProduct = x.IdProduct;
+                product.NameProduct = x.Products.NameProduct;
+                product.ImportPrice = x.Products.ImportPrice;
+                product.Price = x.Products.Price;
+                lstProduct.Add(product);
+
+            });
+            var view = new ProductViewModelsCart();
+            view.CartID = x.CartId;
+            view.CartStatus = x.CartStatus;
+            view.LstProducts = lstProduct;
+            view.TotalCost = x.TotalCost;
+            lstView.Add(view);
+        });
+        return lstView;
     }
 
     public async Task<List<ProductViewModelsCart>> GetProductsInGioHang(Guid idCart)

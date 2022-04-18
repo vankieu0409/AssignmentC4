@@ -15,7 +15,7 @@ public class Customer
     public string? NumberPhone { get; set; }
     public bool IsAdmin { get; set; }
     public bool IsDeleted { get; set; }
+    public virtual Carts Carts { get; set; }
     public virtual ICollection<Order> Orders { get; set; }
-    public virtual ICollection<Carts> Carts { get; set; }
 
 }

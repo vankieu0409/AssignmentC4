@@ -8,5 +8,5 @@ public class ProductViewModelsCart
     public float TotalCost { get; set; }
     public int CartStatus { get; set; }
     public bool IsDeleted { get; set; }
-    public List<ProductCarts> LstProducts { get; set; }
+    public List<ProductViewModel> LstProducts { get; set; }
 }

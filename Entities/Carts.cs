@@ -5,8 +5,6 @@ namespace AssignmentC4.Entities;
 
 public class Carts
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid CustomerID { get; set; }
     public Guid CartId { get; set; }
     [Range(0,double.MaxValue)]

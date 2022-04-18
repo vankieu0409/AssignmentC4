@@ -9,4 +9,5 @@ public interface ICartService
     Task<List<ProductViewModelsCart>> AddProductsToGioHang(Guid idcart, AddProToCartViewModel pro);
     Task<List<ProductViewModelsCart>> UpdateProductsToGioHang(Guid idcart, AddProToCartViewModel pro);
     Task<List<ProductViewModelsCart>> DeleteProductsInGioHang(Guid idcart, AddProToCartViewModel pro);
+    public Task<List<ProductViewModelsCart>> GetAllListCart();
 }
