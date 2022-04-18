@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AssignmentC4.Migrations
 {
-    public partial class Ass : Migration
+    public partial class kieu : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace AssignmentC4.Migrations
                 columns: table => new
                 {
                     IdCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Customer in 4/18/2022 1:55:06 AM"),
+                    CustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Customer in 19/4/2022 2:45:17 AM"),
                     Sex = table.Column<bool>(type: "bit", nullable: false),
                     Account = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -34,6 +34,7 @@ namespace AssignmentC4.Migrations
                     IdProduct = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NameProduct = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Price = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     ImportPrice = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -47,15 +48,15 @@ namespace AssignmentC4.Migrations
                 name: "CARTS",
                 columns: table => new
                 {
-                    CustomerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TotalCost = table.Column<float>(type: "real", nullable: false, defaultValue: 0f),
                     CartStatus = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CARTS", x => new { x.CartId, x.CustomerID });
+                    table.PrimaryKey("PK_CARTS", x => x.CartId);
                     table.ForeignKey(
                         name: "FK_CARTS_CUSTOMER_CustomerID",
                         column: x => x.CustomerID,
@@ -97,27 +98,26 @@ namespace AssignmentC4.Migrations
                 {
                     IdProduct = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdCart = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    NameProduct = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    CartsCartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CartsCustomerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    ImportPrice = table.Column<long>(type: "bigint", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PRODUCT_CARTS", x => new { x.IdCart, x.IdProduct });
                     table.ForeignKey(
-                        name: "FK_PRODUCT_CARTS_CARTS_CartsCartId_CartsCustomerID",
-                        columns: x => new { x.CartsCartId, x.CartsCustomerID },
+                        name: "FK_PRODUCT_CARTS_CARTS_IdCart",
+                        column: x => x.IdCart,
                         principalTable: "CARTS",
-                        principalColumns: new[] { "CartId", "CustomerID" },
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CartId");
                     table.ForeignKey(
                         name: "FK_PRODUCT_CARTS_PRODUCT_IdProduct",
                         column: x => x.IdProduct,
                         principalTable: "PRODUCT",
-                        principalColumn: "IdProduct",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdProduct");
                 });
 
             migrationBuilder.CreateTable(
@@ -150,7 +150,8 @@ namespace AssignmentC4.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_CARTS_CustomerID",
                 table: "CARTS",
-                column: "CustomerID");
+                column: "CustomerID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ORDER_id_Customer",
@@ -161,11 +162,6 @@ namespace AssignmentC4.Migrations
                 name: "IX_OrderDetails_id_Product",
                 table: "OrderDetails",
                 column: "id_Product");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PRODUCT_CARTS_CartsCartId_CartsCustomerID",
-                table: "PRODUCT_CARTS",
-                columns: new[] { "CartsCartId", "CartsCustomerID" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PRODUCT_CARTS_IdProduct",

@@ -17,15 +17,15 @@ namespace AssignmentC4.Controllers
         }
 
         [HttpGet("myCart/{idCart}")]
-        public Task<List<ProductViewModelsCart>> GetProductInCart(Guid idCart)
+        public Task<List<CartProductFake>> GetProductInCart(Guid idCart)
         {
             return _cartService.GetProductsInGioHang(idCart);
         }
-        [HttpGet("historyCart")]
-        public Task<List<ProductViewModelsCart>> getallcart()
-        {
-            var history = _cartService.GetAllListCart();
-            return history;
-        }
+        //[HttpGet("historyCart")]
+        //public Task<List<CartViewModels>> getallcart()
+        //{
+        //    var history = _cartService.GetAllListCart();
+        //    return history;
+        //}
     }
 }

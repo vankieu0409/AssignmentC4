@@ -65,7 +65,7 @@ namespace AssignmentC4.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("Customer in 4/19/2022 1:07:39 AM");
+                        .HasDefaultValue("Customer in 19/4/2022 2:51:13 AM");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
@@ -181,10 +181,10 @@ namespace AssignmentC4.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<decimal>("Price")
+                    b.Property<long>("Price")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("money")
-                        .HasDefaultValue(0m);
+                        .HasColumnType("bigint")
+                        .HasDefaultValue(0L);
 
                     b.Property<int>("Quantity")
                         .ValueGeneratedOnAdd()

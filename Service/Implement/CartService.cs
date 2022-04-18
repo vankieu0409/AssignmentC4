@@ -8,7 +8,7 @@ using AutoMapper;
 
 namespace AssignmentC4.Service.Implement;
 
-public class CartService:ICartService
+public class CartService: ICartService
 {
     private readonly GenericInterface<Carts> _cart;
     private readonly GenericInterface<ProductCarts> _giohang;
@@ -25,44 +25,44 @@ public class CartService:ICartService
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<List<ProductViewModelsCart>> GetAllListCart()
-    {
-        var lstView = new List<ProductViewModelsCart>();
-        var lstCart = _cart.GetAll().ToList();
-        var lstproductCart = _giohang.GetAll().ToList();
-        lstCart.ForEach(x =>
-        {
-            var lstitem = lstproductCart.Where(c => c.IdCart == x.CartId).ToList();
-            var lstProduct = new List<ProductViewModel>();
-            lstitem.ForEach(x =>
-            {
-                var product = new ProductViewModel();
-                product.IdProduct = x.IdProduct;
-                product.NameProduct = x.Products.NameProduct;
-                product.ImportPrice = x.Products.ImportPrice;
-                product.Price = x.Products.Price;
-                lstProduct.Add(product);
+    //public async Task<List<ViewModels.Show.CartViewModels>> GetAllListCart()
+    //{
+    //    var lstView = new List<ViewModels.Show.CartViewModels>();
+    //    var lstCart = _cart.GetAll().ToList();
+    //    var lstproductCart = _giohang.GetAll().ToList();
+    //    lstCart.ForEach(x =>
+    //    {
+    //        var lstitem = lstproductCart.Where(c => c.IdCart == x.CartId).ToList();
+    //        var lstProduct = new List<ProductViewModel>();
+    //        lstitem.ForEach(x =>
+    //        {
+    //            var product = new ProductViewModel();
+    //            product.IdProduct = x.IdProduct;
+    //            product.NameProduct = x.Products.NameProduct;
+    //            product.ImportPrice = x.Products.ImportPrice;
+    //            product.Price = x.Products.Price;
+    //            lstProduct.Add(product);
 
-            });
-            var view = new ProductViewModelsCart();
-            view.CartID = x.CartId;
-            view.CartStatus = x.CartStatus;
-            view.LstProducts = lstProduct;
-            view.TotalCost = x.TotalCost;
-            lstView.Add(view);
-        });
-        return lstView;
-    }
+    //        });
+    //        var view = new ViewModels.Show.CartViewModels();
+    //        view.CartID = x.CartId;
+    //        view.CartStatus = x.CartStatus;
+    //        view.LstProducts = lstProduct;
+    //        view.TotalCost = x.TotalCost;
+    //        lstView.Add(view);
+    //    });
+    //    return lstView;
+    //}
 
-    public async Task<List<ProductViewModelsCart>> GetProductsInGioHang(Guid idCart)
+    public async Task<List<CartProductFake>> GetProductsInGioHang(Guid idCart)
     {
         var ProductInCart = _giohang.GetAll().Where(c => c.IdCart == idCart&& c.IsDeleted==true);
-        var listProductInCart= ProductInCart.Join(_product.GetAll(), a => a.IdProduct, b => b.IdProduct, (a, b) => new {b.NameProduct,b.Image,a.Quantity,a.Price});
-        var listProductInCartShow = _mapper.Map<List<ProductViewModelsCart>>(listProductInCart);
+        var listProductInCart= ProductInCart.Join(_product.GetAll(), a => a.IdProduct, b => b.IdProduct, (a, b) => new {b.IdProduct,b.NameProduct,b.Image,a.Quantity,a.Price});
+        var listProductInCartShow = _mapper.Map<List<CartProductFake>>(listProductInCart.ToList());
          return listProductInCartShow;
     }
 
-    public async Task<List<ProductViewModelsCart>> AddProductsToGioHang(Guid idcart, AddProToCartViewModel pro)
+    public async Task<List<CartProductFake>> AddProductsToGioHang(Guid idcart, AddProToCartViewModel pro)
     {
         var productInCart = new ProductCarts();
         productInCart.IdCart = idcart;
@@ -77,7 +77,7 @@ public class CartService:ICartService
         return await GetProductsInGioHang(idcart) ;
     }
 
-    public async Task<List<ProductViewModelsCart>> UpdateProductsToGioHang(Guid idcart, AddProToCartViewModel pro)
+    public async Task<List<CartProductFake>> UpdateProductsToGioHang(Guid idcart, AddProToCartViewModel pro)
     {
         var productInCart = _giohang.GetAll().FirstOrDefault(c=> Guid.Equals(c.IdCart,idcart)&& Guid.Equals(c.IdProduct,pro.idProduct));
         productInCart.IsDeleted = true;
@@ -90,7 +90,7 @@ public class CartService:ICartService
         return await GetProductsInGioHang(idcart);
     }
 
-    public async Task<List<ProductViewModelsCart>> DeleteProductsInGioHang(Guid idcart, AddProToCartViewModel pro)
+    public async Task<List<CartProductFake>> DeleteProductsInGioHang(Guid idcart, AddProToCartViewModel pro)
     {
         var productInCart = _giohang.GetAll().FirstOrDefault(c => Guid.Equals(c.IdCart, idcart) && Guid.Equals(c.IdProduct, pro.idProduct));
        _giohang.Delete(productInCart);

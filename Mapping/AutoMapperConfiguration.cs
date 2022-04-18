@@ -13,7 +13,8 @@ public class AutoMapperConfiguration : Profile
         CreateMap<Products, ProductViewModel>().ReverseMap();
         CreateMap<Customer, CustomerViewModel>().ReverseMap();
         CreateMap<ProductCUDViewModel, CustomerViewModel>().ReverseMap();
-        CreateMap<Carts, ProductViewModelsCart>().ReverseMap();
+        CreateMap<Carts, CartViewModels>().ReverseMap();
+        CreateMap<Products, CartProductFake>().ReverseMap();
 
     }
 }
