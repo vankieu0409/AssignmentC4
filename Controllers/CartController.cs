@@ -21,10 +21,10 @@ namespace AssignmentC4.Controllers
         {
             return _cartService.GetProductsInGioHang(idCart);
         }
-        //[HttpGet("historyCart")]
-        //public Task<List<ProductViewModelsCart>> GetProductInGioHang(Guid idCart)
-        //{
-        //    var history = _cartService.
-        //}
+        [HttpGet("historyCart")]
+        public Task<List<ProductViewModelsCart>> GetProductInGioHang(Guid idCart)
+        {
+            var history = _cartService.
+        }
     }
 }

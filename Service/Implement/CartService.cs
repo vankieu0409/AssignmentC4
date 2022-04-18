@@ -25,6 +25,12 @@ public class CartService:ICartService
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
+    public Task<List<ProductViewModelsCart>> GetAllListCart()
+    {
+        var lstCart = _cart.GetAll().ToList();
+        return 
+    }
+
     public async Task<List<ProductViewModelsCart>> GetProductsInGioHang(Guid idCart)
     {
         var ProductInCart = _giohang.GetAll().Where(c => c.IdCart == idCart&& c.IsDeleted==true);

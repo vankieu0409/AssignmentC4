@@ -14,5 +14,6 @@ public class AutoMapperConfiguration : Profile
         CreateMap<Products, ProductViewModelsCart>().ReverseMap();
         CreateMap<Customer, CustomerViewModel>().ReverseMap();
         CreateMap<ProductCUDViewModel, CustomerViewModel>().ReverseMap();
+        
     }
 }

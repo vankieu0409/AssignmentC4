@@ -1,11 +1,12 @@
-﻿namespace AssignmentC4.ViewModels.Show;
+﻿using AssignmentC4.Entities;
+
+namespace AssignmentC4.ViewModels.Show;
 
 public class ProductViewModelsCart
 {
-    
-    public string NameProduct { get; set; }
-    public Int64 Price { get; set; }
-    public int Quantity { get; set; }
-
-    public byte Image { get; set; }
+    public Guid CartID { get; set; }
+    public float TotalCost { get; set; }
+    public int CartStatus { get; set; }
+    public bool IsDeleted { get; set; }
+    public List<ProductCarts> LstProducts { get; set; }
 }
