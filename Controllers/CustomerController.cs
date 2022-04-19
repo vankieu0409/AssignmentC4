@@ -29,15 +29,16 @@ namespace AssignmentC4.Controllers
                 throw e;
             };
         }
-        [HttpGet("SignIn")]
-        public IActionResult SignIn(string acc, string pass)
+        [HttpGet("SignIn/{acc}/{pass}")]
+        public IActionResult SignIn([FromRoute] string acc, string pass)
         {
             var PersonSignIn = _customerService.GetCollection()
                 .FirstOrDefault(c => string.Equals(c.Account, acc) && string.Equals(c.Password, pass));
             if (PersonSignIn!=null)
             {
-                var obj = new  {
+                var obj = new {
                     code = 200,
+                    id = PersonSignIn.Account,
                     role = PersonSignIn.IsAdmin,
                     status = "Đăng nhập thành công !"
                 };
@@ -45,7 +46,14 @@ namespace AssignmentC4.Controllers
             }
             else
             {
-                return BadRequest();
+                var obj = new
+                {
+                    code = 404,
+                    id = "",
+                    role = "",
+                    status = "Đăng nhập thành công !"
+                };
+                return Ok(obj);
             }
 
         }
