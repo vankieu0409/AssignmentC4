@@ -2,11 +2,11 @@
 
 namespace AssignmentC4.ViewModels.Show;
 
-public class ProductViewModelsCart
+public class CartViewModels
 {
     public Guid CartID { get; set; }
+    public Guid CustomerID { get; set; }
     public float TotalCost { get; set; }
-    public int CartStatus { get; set; }
     public bool IsDeleted { get; set; }
-    public List<ProductViewModel> LstProducts { get; set; }
+    public List<CartProductFake> LstProducts { get; set; }
 }
