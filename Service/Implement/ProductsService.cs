@@ -19,32 +19,47 @@ public class ProductsService : IProductService
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public IEnumerable<ProductViewModel> GetCollection()
+    public async Task<IEnumerable<ProductViewModel>> GetCollectionAsync()
     {
-        var listProductTemp = _product.GetAll().Where(c => c.IsDeleted == true).ToList();
-        var listProduct = new List<ProductViewModel>();
-        listProduct = _mapper.Map<List<ProductViewModel>>(listProductTemp);
-        return listProduct;
+        var listProductTemp = _product.GetAll().Where(c => c.IsDeleted == false).ToList();
+        return _mapper.Map<List<ProductViewModel>>(listProductTemp);
     }
-
-    public async Task CreateProduct(ProductViewModel productNew)
+    public async Task<IEnumerable<ProductViewModel>> GetCollectionAdminAsync()
+    {
+        var listProductTemp = _product.GetAll().ToList();
+        return _mapper.Map<List<ProductViewModel>>(listProductTemp);
+    }
+    public async Task<IEnumerable<ProductViewModel>> GetProductsAsync(Guid id)
+    {
+        try
+        {
+             var product = _product.GetAll().Where(x => x.IdProduct.Equals(id)).ToList();
+             var resqonse = _mapper.Map<List<ProductViewModel>>(product);
+            return resqonse;
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationException(e.Message);
+        }
+    }
+    public async Task CreateProductAsync(ProductViewModel productNew)
     {
         var productTemp = _mapper.Map<Products>(productNew);
+        productTemp.IdProduct = Guid.NewGuid();
         productTemp.IsDeleted = true;
         await _product.AddAsync(productTemp);
     }
 
-    public async Task UpdateProduct(ProductCUDViewModel productUpdate)
+    public async Task UpdateProductAsync(ProductViewModel productUpdate)
     {
-        var productTemp = _product.GetAll().FirstOrDefault(c => c.IdProduct == productUpdate.IdProduct);
-        productTemp = _mapper.Map<Products>(productUpdate);
-        await _product.Update(productTemp);
+        var productTemp = _mapper.Map<Products>(productUpdate);
+        await _product.UpdateAsync(productTemp);
     }
-    public async Task DeleteProduct(ProductCUDViewModel productUpdate)
+    public async Task DeleteProductAsync(ProductViewModel productUpdate)
     {
         var productTemp = _product.GetAll().FirstOrDefault(c => c.IdProduct == productUpdate.IdProduct);
         productTemp = _mapper.Map<Products>(productUpdate);
         productTemp.IsDeleted = false;
-        await _product.Update(productTemp);
+        await _product.UpdateAsync(productTemp);
     }
 }

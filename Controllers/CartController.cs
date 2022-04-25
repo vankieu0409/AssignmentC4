@@ -15,17 +15,22 @@ namespace AssignmentC4.Controllers
         {
             _cartService = cartService?? throw  new  ArgumentNullException(nameof(cartService));
         }
-
-        [HttpGet("myCart/{idCart}")]
-        public Task<List<CartProductFake>> GetProductInCart(Guid idCart)
+        [HttpGet("{id}")]
+        public async Task<List<ViewModels.ModelCommand.Cart.CartViewModels>> Get(Guid id)
         {
-            return _cartService.GetProductsInGioHang(idCart);
+            var response = _cartService.GetAllProductsInCartAsyn(id);
+            return response.Result;
         }
-        //[HttpGet("historyCart")]
-        //public Task<List<CartViewModels>> getallcart()
-        //{
-        //    var history = _cartService.GetAllListCart();
-        //    return history;
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Add(ViewModels.ModelCommand.Cart.CartViewModels pro)
+        {
+            await _cartService.AddProductsToCartAsyn(pro);
+            var response = new
+            {
+                code = 200,
+                status = "thêm thành công"
+            };
+            return Ok(response);
+        }
     }
 }

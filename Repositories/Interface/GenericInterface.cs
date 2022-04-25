@@ -4,6 +4,6 @@ public interface GenericInterface<T>
 {
     IEnumerable<T> GetAll();
     Task AddAsync(T entity);
-    Task Update(T entity);
-    Task Delete(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(T entity);
 }

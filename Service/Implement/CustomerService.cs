@@ -28,6 +28,7 @@ public class CustomerService:ICustomerService
     public async Task CreateCustomer(CustomerViewModel ctmInput)
     {
         var CustomerTemp = _mapper.Map<Customer>(ctmInput);
+        CustomerTemp.IdCustomer = Guid.NewGuid();
         CustomerTemp.IsDeleted = true;
         await _customer.AddAsync(CustomerTemp);
 
@@ -36,13 +37,13 @@ public class CustomerService:ICustomerService
     public async Task UpdateCustomer(CustomerViewModel customer)
     {
         var customerEditet = _mapper.Map<Customer>(customer);
-        await _customer.Update(customerEditet);
+        await _customer.UpdateAsync(customerEditet);
     }
     public async Task DeleteCustomer(CustomerViewModel customer)
     {
         var customerEditet = _mapper.Map<Customer>(customer);
         customerEditet.IsDeleted = false;
-        await _customer.Update(customerEditet);
+        await _customer.UpdateAsync(customerEditet);
     }
 
 }

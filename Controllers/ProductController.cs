@@ -1,6 +1,7 @@
 ﻿using AssignmentC4.Service.Interface;
 using AssignmentC4.ViewModels.ModelCommand;
 using AssignmentC4.ViewModels.Show;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,33 +18,52 @@ namespace AssignmentC4.Controllers
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
 
-        [HttpGet]
-        public List<ProductViewModel> GetProduct()
+        [HttpGet("getProductForAdmin")]
+        public Task<IEnumerable<ProductViewModel>> getProductForAdmin()
         {
-            return _productService.GetCollection().ToList();
+            return _productService.GetCollectionAdminAsync();
         }
 
-        [HttpPost]
-        public IActionResult CreatAsyncResult(ProductViewModel productNew)
+        [HttpGet]
+        public Task <IEnumerable<ProductViewModel>> GetProduct()
+        {
+            var listProduct =  _productService.GetCollectionAsync();
+            return listProduct;
+        }
+        [HttpGet("{id}")]
+        public async Task<IEnumerable<ProductViewModel>> GetProducts(Guid id)
         {
             try
             {
-                _productService.CreateProduct(productNew);
-                return Ok("Thêm Thành Công!");
+                var resqponse = await _productService.GetProductsAsync(id);
+                return resqponse;
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException(e.Message);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreatAsyncResult([FromBody] ProductViewModel productNew)
+        {
+            try
+            {
+                await _productService.CreateProductAsync(productNew);
+                var response = Ok("Thêm Thành Công!");
+                return response;
             }
             catch (Exception e)
             {
                 return BadRequest($" Đang có lỗi nay {e}");
             }
         }
-
-        [HttpPut("Update/{id}")]
-        public IActionResult UpdtaeActionResult(ProductCUDViewModel productupdate)
+        [HttpPut]
+        public async Task<IActionResult> UpdtaeActionResult([FromBody] ProductViewModel productupdate)
         {
             try
             {
-                _productService.UpdateProduct(productupdate);
-               
+                await _productService.UpdateProductAsync(productupdate);
+
                 return Ok("Sửa Thành Công!");
             }
             catch (Exception e)
@@ -53,11 +73,11 @@ namespace AssignmentC4.Controllers
             }
         }
         [HttpPut("Delete/{id}")]
-        public IActionResult DeleteActionResult(ProductCUDViewModel productupdate)
+        public async Task<IActionResult> DeleteActionResult(ProductViewModel productupdate)
         {
             try
             {
-                _productService.DeleteProduct(productupdate);
+                await _productService.DeleteProductAsync(productupdate);
 
                 return Ok("Xóa Thành Công!");
             }

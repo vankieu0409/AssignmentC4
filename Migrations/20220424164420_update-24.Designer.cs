@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentC4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220418194517_kieu")]
-    partial class kieu
+    [Migration("20220424164420_update-24")]
+    partial class update24
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,15 +26,12 @@ namespace AssignmentC4.Migrations
 
             modelBuilder.Entity("AssignmentC4.Entities.Carts", b =>
                 {
-                    b.Property<Guid>("CartId")
+                    b.Property<Guid>("CustomerID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CartStatus")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("CustomerID")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -44,10 +41,7 @@ namespace AssignmentC4.Migrations
                         .HasColumnType("real")
                         .HasDefaultValue(0f);
 
-                    b.HasKey("CartId");
-
-                    b.HasIndex("CustomerID")
-                        .IsUnique();
+                    b.HasKey("CustomerID");
 
                     b.ToTable("CARTS", (string)null);
                 });
@@ -67,7 +61,7 @@ namespace AssignmentC4.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("Customer in 19/4/2022 2:45:17 AM");
+                        .HasDefaultValue("Customer in 4/24/2022 11:44:20 PM");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
@@ -148,20 +142,14 @@ namespace AssignmentC4.Migrations
                     b.Property<Guid>("id_Product")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("money");
-
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("price_Each")
+                    b.Property<decimal>("Price")
                         .HasColumnType("money");
 
                     b.Property<int>("quantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("unit_Price")
-                        .HasColumnType("money");
 
                     b.HasKey("id_Order", "id_Product");
 
@@ -178,21 +166,10 @@ namespace AssignmentC4.Migrations
                     b.Property<Guid>("IdProduct")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ImportPrice")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
-
-                    b.Property<string>("NameProduct")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Price")
                         .ValueGeneratedOnAdd()

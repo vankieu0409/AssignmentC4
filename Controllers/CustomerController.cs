@@ -17,7 +17,7 @@ namespace AssignmentC4.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet]
+        [HttpGet("getAllCustomer")]
         public List<CustomerViewModel> Get()
         {
             try
@@ -29,56 +29,93 @@ namespace AssignmentC4.Controllers
                 throw e;
             };
         }
-        [HttpGet("SignIn/{acc}/{pass}")]
+        [HttpPost("SignIn/{acc}/{pass}")]
         public IActionResult SignIn([FromRoute] string acc, string pass)
         {
-            var PersonSignIn = _customerService.GetCollection()
-                .FirstOrDefault(c => string.Equals(c.Account, acc) && string.Equals(c.Password, pass));
-            if (PersonSignIn!=null)
+            try
             {
-                var obj = new {
-                    code = 200,
-                    id = PersonSignIn.Account,
-                    role = PersonSignIn.IsAdmin,
-                    status = "Đăng nhập thành công !"
-                };
-                return Ok( obj);
-            }
-            else
-            {
-                var obj = new
+                var PersonSignIn = _customerService.GetCollection()
+                    .FirstOrDefault(c => string.Equals(c.Account, acc) && string.Equals(c.Password, pass));
+                if (PersonSignIn != null)
                 {
-                    code = 404,
-                    id = "",
-                    role = "",
-                    status = "Đăng nhập thành công !"
-                };
-                return Ok(obj);
+                    var obj = new
+                    {
+                        code = 200,
+                        id = PersonSignIn.Account,
+                        role = PersonSignIn.IsAdmin,
+                        status = "Đăng nhập thành công !"
+                    };
+                    return Ok(obj);
+                }
+                else
+                {
+                    var obj = new
+                    {
+                        code = 404,
+                        id = "",
+                        role = "",
+                        status = "Đăng nhập thành công !"
+                    };
+                    return Ok(obj);
+                }
             }
-
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+                throw new Exception(e.Message);
+            }
         }
 
-        [HttpPost]
+        [HttpPost("createCustomer")]
         public IActionResult CreatCustomer(CustomerViewModel aModel)
         {
-
-            _customerService.CreateCustomer(aModel);
-            return Ok(" Thêm thành Công!");
+            try
+            {
+                _customerService.CreateCustomer(aModel);
+                var response = new
+                {
+                    code = 200,
+                    status = " Thêm thành Công!"
+                };
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+                throw new Exception(e.Message);
+            }
         }
-        [HttpPut]
+        [HttpPut("updateCustomer")]
         public IActionResult UpdateCustomer(CustomerViewModel aModel)
         {
-
-            _customerService.UpdateCustomer(aModel);
-            return Ok(" Thêm thành Công!");
+            try
+            {
+                _customerService.UpdateCustomer(aModel);
+                var response = new
+                {
+                    code = 200,
+                    status = " cập nhật thành Công!"
+                };
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message); 
+            }
         }
 
         [HttpDelete]
         public IActionResult DeleteCustomer(CustomerViewModel aModel)
         {
-
-            _customerService.DeleteCustomer(aModel);
-            return Ok(" Thêm thành Công!");
+            try
+            {
+                _customerService.DeleteCustomer(aModel);
+                return Ok("đã xóa thành Công!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

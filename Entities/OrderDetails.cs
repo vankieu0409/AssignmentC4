@@ -12,15 +12,8 @@ public class OrderDetails
     [Column(TypeName = "money")]
     [Range(0, int.MaxValue)]
     // giá tổng tiền của sản phẩm
-    public int unit_Price { get; set; }
-    // giá bán 
-    [Column(TypeName = "money")]
-    [Range(0, int.MaxValue)]
-    public int price_Each { get; set; }
-    // giảm giá
-    [Column(TypeName = "money")]
-    [Range(0, int.MaxValue)]
-    public int Discount { get; set; }
+    public int Price { get; set; }
+   
     public bool IsDelete { get; set; }
     public virtual Order Orders { get; set; }
 

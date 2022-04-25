@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AssignmentC4.Migrations
 {
-    public partial class kieu : Migration
+    public partial class update23 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace AssignmentC4.Migrations
                 columns: table => new
                 {
                     IdCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Customer in 19/4/2022 2:45:17 AM"),
+                    CustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Customer in 4/23/2022 9:00:39 AM"),
                     Sex = table.Column<bool>(type: "bit", nullable: false),
                     Account = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -98,11 +98,8 @@ namespace AssignmentC4.Migrations
                 {
                     IdProduct = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdCart = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NameProduct = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
                     Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    ImportPrice = table.Column<long>(type: "bigint", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>

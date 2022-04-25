@@ -4,6 +4,7 @@ using AssignmentC4.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentC4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220423020040_update-23")]
+    partial class update23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,34 @@ namespace AssignmentC4.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AssignmentC4.Entities.Carts", b =>
+                {
+                    b.Property<Guid>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CartStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CustomerID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("TotalCost")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("CustomerID")
+                        .IsUnique();
+
+                    b.ToTable("CARTS", (string)null);
+                });
 
             modelBuilder.Entity("AssignmentC4.Entities.Customer", b =>
                 {
@@ -37,7 +67,7 @@ namespace AssignmentC4.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("Customer in 4/25/2022 3:43:34 AM");
+                        .HasDefaultValue("Customer in 4/23/2022 9:00:39 AM");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
@@ -118,14 +148,20 @@ namespace AssignmentC4.Migrations
                     b.Property<Guid>("id_Product")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("money");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("price_Each")
                         .HasColumnType("money");
 
                     b.Property<int>("quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("unit_Price")
+                        .HasColumnType("money");
 
                     b.HasKey("id_Order", "id_Product");
 
@@ -136,10 +172,10 @@ namespace AssignmentC4.Migrations
 
             modelBuilder.Entity("AssignmentC4.Entities.ProductCarts", b =>
                 {
-                    b.Property<Guid>("IdProduct")
+                    b.Property<Guid>("IdCart")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CustomerID")
+                    b.Property<Guid>("IdProduct")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -147,28 +183,19 @@ namespace AssignmentC4.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
-                    b.Property<float>("Price")
+                    b.Property<long>("Price")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("real")
-                        .HasDefaultValue(0f);
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ProductsIdProduct")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint")
+                        .HasDefaultValue(0L);
 
                     b.Property<int>("Quantity")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(1);
 
-                    b.HasKey("IdProduct", "CustomerID");
+                    b.HasKey("IdCart", "IdProduct");
 
-                    b.HasIndex("CustomerID");
-
-                    b.HasIndex("ProductsIdProduct");
+                    b.HasIndex("IdProduct");
 
                     b.ToTable("PRODUCT_CARTS", (string)null);
                 });
@@ -210,6 +237,17 @@ namespace AssignmentC4.Migrations
                     b.ToTable("PRODUCT", (string)null);
                 });
 
+            modelBuilder.Entity("AssignmentC4.Entities.Carts", b =>
+                {
+                    b.HasOne("AssignmentC4.Entities.Customer", "Customer")
+                        .WithOne("Carts")
+                        .HasForeignKey("AssignmentC4.Entities.Carts", "CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("AssignmentC4.Entities.Order", b =>
                 {
                     b.HasOne("AssignmentC4.Entities.Customer", "Customers")
@@ -239,22 +277,32 @@ namespace AssignmentC4.Migrations
 
             modelBuilder.Entity("AssignmentC4.Entities.ProductCarts", b =>
                 {
-                    b.HasOne("AssignmentC4.Entities.Customer", null)
-                        .WithMany("ProductCarts")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("AssignmentC4.Entities.Carts", "Carts")
+                        .WithMany("ProductsCarts")
+                        .HasForeignKey("IdCart")
                         .IsRequired();
 
-                    b.HasOne("AssignmentC4.Entities.Products", null)
+                    b.HasOne("AssignmentC4.Entities.Products", "Products")
                         .WithMany("ProductCarts")
-                        .HasForeignKey("ProductsIdProduct");
+                        .HasForeignKey("IdProduct")
+                        .IsRequired();
+
+                    b.Navigation("Carts");
+
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("AssignmentC4.Entities.Carts", b =>
+                {
+                    b.Navigation("ProductsCarts");
                 });
 
             modelBuilder.Entity("AssignmentC4.Entities.Customer", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Carts")
+                        .IsRequired();
 
-                    b.Navigation("ProductCarts");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("AssignmentC4.Entities.Order", b =>

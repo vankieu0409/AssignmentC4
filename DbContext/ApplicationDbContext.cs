@@ -12,7 +12,6 @@ public class ApplicationDbContext:Microsoft.EntityFrameworkCore.DbContext
         
     }
 
-    public DbSet<Carts> Carts{ get; set; }
     public DbSet<ProductCarts> ProductCartses { get; set; }
     public DbSet<Products> Products{ get; set; }
     public DbSet<Order> Orders{ get; set; }
@@ -22,7 +21,6 @@ public class ApplicationDbContext:Microsoft.EntityFrameworkCore.DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ProductCartsConfiguration());
-        modelBuilder.ApplyConfiguration(new CartsConfiguration());
        
         modelBuilder.ApplyConfiguration(new CustomersConfiguration());
        

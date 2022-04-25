@@ -6,8 +6,10 @@ namespace AssignmentC4.Service.Interface;
 
 public interface IProductService
 {
-    IEnumerable<ProductViewModel> GetCollection();
-    Task CreateProduct(ProductViewModel productNew);
-    Task UpdateProduct(ProductCUDViewModel productUpdate);
-    Task DeleteProduct(ProductCUDViewModel productDelete);
+    Task<IEnumerable<ProductViewModel>> GetCollectionAsync();
+    Task<IEnumerable<ProductViewModel>> GetCollectionAdminAsync();
+    Task<IEnumerable<ProductViewModel>> GetProductsAsync(Guid id);
+    Task CreateProductAsync(ProductViewModel productNew);
+    Task UpdateProductAsync(ProductViewModel productUpdate);
+    Task DeleteProductAsync(ProductViewModel productDelete);
 }

@@ -6,7 +6,6 @@ namespace AssignmentC4.Entities;
 public class Products
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid IdProduct { get; set; }
     [Required]
     [MinLength(5)]

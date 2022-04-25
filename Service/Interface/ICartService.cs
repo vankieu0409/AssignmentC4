@@ -5,9 +5,9 @@ namespace AssignmentC4.Service.Interface;
 
 public interface ICartService
 {
-     Task<List<CartProductFake>> GetProductsInGioHang(Guid idCart);
-    Task<List<CartProductFake>> AddProductsToGioHang(Guid idcart, AddProToCartViewModel pro);
-    Task<List<CartProductFake>> UpdateProductsToGioHang(Guid idcart, AddProToCartViewModel pro);
-    Task<List<CartProductFake>> DeleteProductsInGioHang(Guid idcart, AddProToCartViewModel pro);
-   // public Task<List<ViewModels.Show.CartViewModels>> GetAllListCart();
+    Task<List<ViewModels.ModelCommand.Cart.CartViewModels>> GetAllProductsInCartAsyn(Guid id);
+    Task<List<ViewModels.ModelCommand.Cart.CartViewModels>> GetProductsInCartAsyn(Guid idCart);
+    Task<List<ViewModels.ModelCommand.Cart.CartViewModels>> AddProductsToCartAsyn(ViewModels.ModelCommand.Cart.CartViewModels pro);
+    Task<List<ViewModels.ModelCommand.Cart.CartViewModels>> UpdateProductsToCartAsyn(ViewModels.ModelCommand.Cart.CartViewModels pro);
+    Task<List<ViewModels.ModelCommand.Cart.CartViewModels>> DeleteProductsInCartAsyn(ViewModels.ModelCommand.Cart.CartViewModels pro);
 }

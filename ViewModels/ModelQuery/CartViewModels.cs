@@ -8,5 +8,4 @@ public class CartViewModels
     public Guid CustomerID { get; set; }
     public float TotalCost { get; set; }
     public bool IsDeleted { get; set; }
-    public List<CartProductFake> LstProducts { get; set; }
 }

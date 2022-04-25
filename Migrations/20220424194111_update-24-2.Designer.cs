@@ -4,6 +4,7 @@ using AssignmentC4.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentC4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220424194111_update-24-2")]
+    partial class update242
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace AssignmentC4.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("Customer in 4/25/2022 3:43:34 AM");
+                        .HasDefaultValue("Customer in 4/25/2022 2:41:11 AM");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
@@ -156,9 +158,6 @@ namespace AssignmentC4.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProductsIdProduct")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Quantity")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -167,8 +166,6 @@ namespace AssignmentC4.Migrations
                     b.HasKey("IdProduct", "CustomerID");
 
                     b.HasIndex("CustomerID");
-
-                    b.HasIndex("ProductsIdProduct");
 
                     b.ToTable("PRODUCT_CARTS", (string)null);
                 });
@@ -239,15 +236,19 @@ namespace AssignmentC4.Migrations
 
             modelBuilder.Entity("AssignmentC4.Entities.ProductCarts", b =>
                 {
-                    b.HasOne("AssignmentC4.Entities.Customer", null)
+                    b.HasOne("AssignmentC4.Entities.Customer", "Customer")
                         .WithMany("ProductCarts")
                         .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AssignmentC4.Entities.Products", null)
+                    b.HasOne("AssignmentC4.Entities.Products", "Products")
                         .WithMany("ProductCarts")
-                        .HasForeignKey("ProductsIdProduct");
+                        .HasForeignKey("IdProduct")
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("AssignmentC4.Entities.Customer", b =>

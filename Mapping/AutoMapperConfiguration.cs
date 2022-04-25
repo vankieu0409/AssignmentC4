@@ -11,10 +11,11 @@ public class AutoMapperConfiguration : Profile
     public AutoMapperConfiguration()
     {
         CreateMap<Products, ProductViewModel>().ReverseMap();
+        CreateMap<ProductViewModel,Products>().ReverseMap();
         CreateMap<Customer, CustomerViewModel>().ReverseMap();
-        CreateMap<ProductCUDViewModel, CustomerViewModel>().ReverseMap();
-        CreateMap<Carts, CartViewModels>().ReverseMap();
-        CreateMap<Products, CartProductFake>().ReverseMap();
-
+        CreateMap<Products, ViewModels.ModelCommand.Cart.CartViewModels>().ReverseMap();
+        CreateMap<ViewModels.ModelCommand.Cart.CartViewModels, Products>().ReverseMap();
+        CreateMap<ProductCarts, ViewModels.ModelCommand.Cart.CartViewModels>().ReverseMap();
+        CreateMap<ViewModels.ModelCommand.Cart.CartViewModels, ProductCarts>().ReverseMap();
     }
 }
